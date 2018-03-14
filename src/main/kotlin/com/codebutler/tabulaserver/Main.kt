@@ -26,7 +26,7 @@ import io.ktor.routing.get
 import io.ktor.routing.route
 import io.ktor.routing.routing
 
-private val secret = System.getProperty("JWT_SECRET", "not-so-secret")
+private val secret = System.getenv("JWT_SECRET") ?: "not-so-secret"
 
 private val moshi: JsonAdapter<Any> = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
