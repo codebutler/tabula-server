@@ -2,4 +2,5 @@
 .gradle/
 out/
 build/
+.http-cache/
 .DS_Store

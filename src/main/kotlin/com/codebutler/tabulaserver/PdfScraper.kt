@@ -1,13 +1,21 @@
 package com.codebutler.tabulaserver
 
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.apache.pdfbox.pdmodel.PDDocument
 import technology.tabula.ObjectExtractor
 import technology.tabula.detectors.NurminenDetectionAlgorithm
 import technology.tabula.extractors.SpreadsheetExtractionAlgorithm
+import java.nio.file.Paths
 
-private val okHttpClient = OkHttpClient()
+private const val cacheSize = 10L * 1024L * 1024L // 10 MiB
+private val cache = Cache(Paths.get(System.getProperty("user.dir"), ".http-cache").toFile(), cacheSize)
+
+private val okHttpClient = OkHttpClient.Builder()
+        .cache(cache)
+        .build()
+
 private val extractor = SpreadsheetExtractionAlgorithm()
 private val detector = NurminenDetectionAlgorithm()
 
