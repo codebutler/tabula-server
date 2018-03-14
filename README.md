@@ -26,7 +26,7 @@ Returns JSON:
           "data": [
             { "Id": "1", "Name": "Eric", "Email": "eric@example.com" },
             { "Id": "2", "Name": "Logan", "Email": "logan@example.com" },
-            { "Id": "3", "Name": "Emaily", "Email": "emily@example.com" },
+            { "Id": "3", "Name": "Emily", "Email": "emily@example.com" },
           ]
         }
       ]
