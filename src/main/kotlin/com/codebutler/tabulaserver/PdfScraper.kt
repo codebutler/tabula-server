@@ -40,15 +40,16 @@ suspend fun scrapePdf(url: String): ScrapedPdf {
                 pages = pages.map { tables ->
                     ScrapedPdf.Page(
                             tables = tables.map { table ->
-                                val headerRow = table.rows.first()
-                                val dataRows = table.rows.drop(1)
+                                val rowsSequence = table.rows.asSequence()
+                                val headerRow = rowsSequence.first()
+                                val dataRows = rowsSequence.drop(1)
                                 ScrapedPdf.Page.Table(
                                         data = dataRows.map { row ->
                                             headerRow.zip(row)
                                                     .associate { (headerRow, dataRow) ->
                                                         headerRow.text to dataRow.text
                                                     }
-                                        }
+                                        }.toList()
                                 )
                             }
                     )
