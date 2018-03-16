@@ -25,6 +25,9 @@ import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.sentry.Sentry
+import io.sentry.SentryClient
+import io.sentry.SentryClientFactory
 
 private val secret = System.getenv("JWT_SECRET") ?: "not-so-secret"
 
@@ -34,12 +37,22 @@ private val moshi: JsonAdapter<Any> = Moshi.Builder()
         .adapter<Any>(Any::class.java)
         .indent("  ")
 
+private val sentry: SentryClient by lazy {
+    Sentry.init()
+    SentryClientFactory.sentryClient()
+}
+
 @Suppress("unused")
 fun Application.main() {
     install(CallLogging)
     install(DefaultHeaders)
-    install(StatusPages)
     install(Compression)
+    install(StatusPages) {
+        exception<Throwable> { cause ->
+            sentry.sendException(cause)
+            call.respond(HttpStatusCode.InternalServerError)
+        }
+    }
 
     routing {
         get("/") {

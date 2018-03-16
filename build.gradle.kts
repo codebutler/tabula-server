@@ -45,7 +45,7 @@ repositories {
 }
 
 dependencies {
-    compile(kotlinModule("stdlib-jdk8", kotlin_version))
+    compile(kotlin("stdlib-jdk8", kotlin_version))
 
     compile("technology.tabula:tabula:1.0.1") {
         exclude(group = "org.slf4j", module = "slf4j-simple")
@@ -65,6 +65,8 @@ dependencies {
     compile("io.ktor:ktor-auth-jwt:$ktor_version")
 
     compile("ch.qos.logback:logback-classic:1.2.1")
+
+    compile("io.sentry:sentry:1.7.2")
 
     testCompile("junit", "junit", "4.12")
 }
